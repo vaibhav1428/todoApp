@@ -65,8 +65,9 @@ class todoControllerClass {
         try {
             const { task } = req.body;
             const decryptedId = cjs_decrypt(req.user.id)
-            await tododService.create(task, decryptedId)
-            return res.status(httpStatus.OK).send(ServerResponse.successmsg(`Task created Successfully`));
+            let createdTodo = await tododService.create(task, decryptedId)
+            createdTodo = {...createdTodo , id : cjs_encrypt(createdTodo.id)}
+            return res.status(httpStatus.OK).send(ServerResponse.successdatamsg(createdTodo,`Task created Successfully`));
         } catch (error) {
             return res.status(httpStatus.BAD_REQUEST).send(ServerResponse.validationResponse(error.message || 'An unknown error occurred'));
         }
