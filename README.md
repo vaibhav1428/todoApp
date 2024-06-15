@@ -52,7 +52,7 @@ If you need to update `npm`, you can make it using `npm`! Cool right? After runn
 ## Install
 
     $ git clone https://github.com/vaibhav1428/todoApp.git
-    $ cd todoapp
+    $ cd todoApp
     $ npm install
 
 ## Configure app
