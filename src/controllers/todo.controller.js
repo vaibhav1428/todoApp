@@ -10,7 +10,6 @@ const tododService = require("../services/todo.service");
 class todoControllerClass {
 
 
-
     async todoList(req, res) {
         try {
             const andCondition = {

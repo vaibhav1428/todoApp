@@ -6,6 +6,11 @@ const bcrypt = require('bcrypt');
 
 
 class authServiceClass {
+    /**
+     * 
+     * @param {*} email 
+     * @returns 
+     */
 
     async findUserByEmail(email){
         const query  = {
@@ -16,7 +21,14 @@ class authServiceClass {
         return response.rowCount > 0  ? response?.rows[0] : false;
     } 
     
-    
+    /**
+     * 
+     * @param {*} fullname 
+     * @param {*} countryCode 
+     * @param {*} mobile 
+     * @param {*} email 
+     * @returns 
+     */
     async createUser(fullname, countryCode, mobile, email){
         const query  = {
             text: userModel.create,
@@ -26,6 +38,12 @@ class authServiceClass {
         return response.rowCount > 0  ? response?.rows[0] : {};
     }   
     
+    /**
+     * 
+     * @param {*} userID 
+     * @param {*} token 
+     * @returns 
+     */
     
     async InsertToken(userID,token){
         const query  = {
@@ -36,6 +54,12 @@ class authServiceClass {
         return response.rowCount > 0  ? response?.rows[0] : {};
     }
 
+    /**
+     * 
+     * @param {*} userID 
+     * @param {*} token 
+     * @returns 
+     */
   
     async findTokenDetails(userID,token){
         const query  = {
@@ -50,6 +74,12 @@ class authServiceClass {
 
     }  
 
+    /**
+     * 
+     * @param {*} userID 
+     * @param {*} password 
+     * @returns 
+     */
 
     async passwordSetup(userID,password){
         const generatePassword = await this.generatePassword(password);
@@ -62,6 +92,11 @@ class authServiceClass {
         return response.rowCount > 0  ? response?.rows[0] : {};
     }
 
+    /**
+     * 
+     * @param {*} tokenID 
+     * @returns 
+     */
 
     async expiretoken(tokenID){
         const query  = {
@@ -78,6 +113,7 @@ class authServiceClass {
         const hashpassword = bcrypt.hashSync(password, salt);
         return hashpassword
     };
+
 
 
     comparepassword = async (password,userPassword) => {

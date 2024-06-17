@@ -4,6 +4,13 @@ const Helper = require("../helpers/helpers");
 const todoModel = require("../models/todo.model");
 
 class tododServiceClass {
+    /**
+     * 
+     * @param {*} task 
+     * @param {*} userID 
+     * @returns 
+     */
+
     async create(task, userID) {
         const query = {
             text: todoModel.create,
@@ -15,6 +22,13 @@ class tododServiceClass {
         }
         throw new Error('Unable to create todo!!')
     }
+
+    /**
+     * 
+     * @param {*} task 
+     * @param {*} taskID 
+     * @returns 
+     */
 
     async update(task, taskID) {
         const query = {
@@ -30,6 +44,12 @@ class tododServiceClass {
     }
 
 
+    /**
+     * 
+     * @param {*} taskID 
+     * @returns 
+     */
+
     async delete(taskID) {
         const query = {
             text: todoModel.delete,
@@ -43,6 +63,12 @@ class tododServiceClass {
 
     }
 
+    /**
+     * 
+     * @param {*} taskID 
+     * @returns 
+     */
+
     async completeTodo(taskID) {
         const query = {
             text: todoModel.complete,
@@ -55,7 +81,6 @@ class tododServiceClass {
         throw new Error('Unable to complete todo!!')
 
     }
-
 
     async list(selectction, andCondition, likeCondition,dateCondition, limit) {
         let finalCondition = ' where is_deleted=false ';
