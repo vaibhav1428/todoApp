@@ -16,10 +16,13 @@ class todoControllerClass {
             const andCondition = {
                 userid : cjs_decrypt(req.user.id)
             };
-            
+            const  dateCondition = {
+                from_date: "",
+                to_date: "",
+            };
             const likeCondition = {};
             const limit = { perpage: 0, start: 0  ,order_by : 'id' , sort:'desc'  };
-            const { perpage, page, completed, userid, task ,order_by ,sort} = req.query;
+            const { perpage, page, completed, userid, task ,order_by ,sort,from_date,to_date} = req.query;
 
             if (perpage && page) {
                 limit.perpage = perpage;
@@ -39,9 +42,14 @@ class todoControllerClass {
                 likeCondition['task'] = task;
             }
 
+            if (from_date && to_date) {
+                dateCondition.from_date = from_date;
+                dateCondition.to_date = to_date;
+            }
+
             const selectction = "*";
 
-            const todoList = await tododService.list(selectction, andCondition, likeCondition, limit);
+            const todoList = await tododService.list(selectction, andCondition, likeCondition,dateCondition, limit);
             const todoData = todoList && todoList.map((data, index) => {
                 return {
                     ...data,
@@ -53,7 +61,7 @@ class todoControllerClass {
             })
 
             const couuntselection = 'COUNT(id) as count'
-            const totaltask = await tododService.list(couuntselection, andCondition, likeCondition, {});
+            const totaltask = await tododService.list(couuntselection, andCondition, likeCondition,dateCondition, {});
             return res.status(httpStatus.OK).send(ServerResponse.successdatamsg(todoData, `Task created Successfully`, totaltask[0].count));
         } catch (error) {
             return res.status(httpStatus.BAD_REQUEST).send(ServerResponse.validationResponse(error.message || 'An unknown error occurred'));

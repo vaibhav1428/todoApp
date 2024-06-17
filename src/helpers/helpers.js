@@ -35,6 +35,18 @@ class HelpersClass {
     async getDateBetweenCondition(fromDate, toDate, dbDateField) {
         return `DATE(${dbDateField}) BETWEEN '${fromDate}' AND '${toDate}'`;
     }
+
+    async get_date_between_condition (from_date, to_date, db_date_field) {
+        return (
+            "DATE(" +
+            db_date_field +
+            ") BETWEEN '" +
+            from_date +
+            "' AND '" +
+            to_date +
+            "'"
+        );
+    }
 }
 
 const Helper = new HelpersClass();

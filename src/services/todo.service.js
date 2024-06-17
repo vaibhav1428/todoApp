@@ -57,7 +57,7 @@ class tododServiceClass {
     }
 
 
-    async list(selectction, andCondition, likeCondition, limit) {
+    async list(selectction, andCondition, likeCondition,dateCondition, limit) {
         let finalCondition = ' where is_deleted=false ';
         let and = '';
         let limitString = '';
@@ -73,6 +73,14 @@ class tododServiceClass {
         if (Object.keys(likeCondition).length) {
             const condition = await Helper.createLikeCondition(likeCondition, 'OR');
           
+            if (and === '') {
+                and = ' and ';
+            }
+            finalCondition = `${finalCondition + and} (${condition} )`;
+        }
+
+        if (Object.keys(dateCondition).length) {
+            const condition = await Helper.get_date_between_condition( dateCondition.from_date, dateCondition.to_date,"created_at");
             if (and === '') {
                 and = ' and ';
             }
